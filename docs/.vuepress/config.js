@@ -1,40 +1,57 @@
 module.exports = {
-  title: 'Hello VuePress',
-  description: 'Just playing around',
+  theme: 'reco',
+  themeConfig: {
+    showParticles: false,
+    // particlesConfig: {
+    //   color: '0, 0, 0', //color of lines, default: '0,0,0'; RGB values: (R,G,B).(note: use ',' to separate.)
+    //   pointColor: '0, 0, 0', //color of points, default: '0,0,0'; RGB values: (R,G,B).(note: use ',' to separate.)
+    //   opacity: 0.5, // the opacity of line (0~1), default: 0.5.
+    //   count: 60, // the number of lines, default: 66.
+    //   zIndex: -1, // z-index property of the background, default: -1.
+    // },
+  },
+  title: 'website', // 设置网站标题
+  description: 'website',
+  base: '/',
+  markdown: {
+    lineNumbers: true
+  },
   themeConfig: {
     nav: [{
-      text: 'Languages',
-      items: [{
-          text: 'Chinese',
-          link: '/language/chinese'
-        },
-        {
-          text: 'Japanese',
-          link: '/language/japanese'
-        }
-      ]
-    }],
-    sidebar: [{
-        title: 'JavaScript', // 侧边栏名称
-        collapsable: true, // 可折叠
-        children: [
-          '', // 你的md文件地址
+        text: '分类',
+        items: [{
+            text: '前端',
+            link: '/categories/frontEnd'
+          },
+          {
+            text: '后端',
+            link: '/categories/backEnd'
+          }
         ]
       },
       {
-        title: 'CSS',
-        collapsable: true,
-        children: [
-          '',
-        ]
+        text: 'Tags',
+        link: '/tags'
       },
       {
-        title: 'HTTP',
-        collapsable: true,
-        children: [
-          '',
-        ]
-      },
-    ]
+        text: 'Github',
+        link: 'https://github.com/TypeInfos'
+      }
+    ],
+    // sidebar: [{
+    //     title: '个人介绍',
+    //     children: [
+    //       '/selfIntroduction'
+    //     ]
+    //   },
+    //   {
+
+    //   }
+    // ],
+    // valine配置
+    valineConfig: {
+      appId: 'WVINvnvFXAbxAjirQzbDruKP-gzGzoHsz', // your appId
+      appKey: 'gar8bppl0vEVOiawaJUXrRM2', // your appKey
+    }
   }
 }

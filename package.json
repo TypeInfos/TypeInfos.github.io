@@ -12,6 +12,7 @@
   "dependencies": {
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
+    "vuepress-theme-reco": "^0.1.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
