@@ -7,10 +7,8 @@ sidebar: auto
 
 ## 谷歌插件的大致内容
 
-background.js:背景页，当你的插件被挂载在浏览器的一瞬间开始执行，当你刷新插件和浏览器重启时，也会重新执行里面的代码
-
+background.js:背景页，当你的插件被挂载在浏览器的一瞬间开始执行，当你刷新插件和浏览器重启时，也会重新执行里面的代码<br>
 content.js:content可能不止一个，因为manifest.json里面的content_scripts配置项可以加好几个content.js，它是用来插入到某个网页的代码，比如当manifest.json的配置如下:
-
 ``` js
     "content_scripts": [{
       "matches": ["https://www.baidu.com"],  //必选，指定内容脚本要插入到哪些页面中去
@@ -23,16 +21,113 @@ content.js:content可能不止一个，因为manifest.json里面的content_scrip
 ```
 
 ::: tip
-content_scripts是一个数组，说明可以对多个网站进行代码嵌入
-"run_at"表示你的content.js要在什么时候嵌入到网站，总共有三个可选值：
-"document_start":这些文件将在 css 中指定的文件之后，但是在所有其他 DOM 构造或脚本运行之前插入，也就是目标页的文档节点加载完之前就注入content.js了，这或许会让你代码里面的document.querySelector()不会达到你预期的效果
-"document_end":文件将在 DOM 完成之后立即插入，但是在加载子资源（如图像与框架）之前插入，这个时候基本页面上面的任何节点你都可以拿来用，但是为了保险起见还是放在window.onload里面比较保险
-"document_idle":run_at的默认值，浏览器将在 "document_end" 和刚发生 window.onload 事件这两个时刻之间选择合适的时候插入，具体的插入时间取决于文档的复杂程度以及加载文档所花的时间，并且浏览器会尽可能地为加快页面加载速度而优化，因为是浏览器来决定插入的时间，所以我基本不用这个
+content_scripts是一个数组，说明可以对多个网站进行代码嵌入<br/>
+"run_at"表示你的content.js要在什么时候嵌入到网站<br/>
+"document_start":这些文件将在 css 中指定的文件之后，但是在所有其他 DOM 构造或脚本运行之前插入，也就是目标页的文档节点加载完之前就注入content.js了，这或许会让你代码里面的document.querySelector()不会达到你预期的效果，详情可查看[ContentAPI](https://crxdoc-zh.appspot.com/extensions/content_scripts)
 :::
 
 ## 插件的内部通讯
-::: tip
-为什么要在插件内部通讯呢？比如你在content.js获取了页面节点信息想要请求后端转换，那你是在content直接请求你自己的服务器吗？这样发出的请求源是目标页。http请求中的referrer，用来指明当前流量的来源参考页。例如在www.sina.com.cn/sports/上点击一个链接到达cctv.com首页，那么就referrer就是www.sina.com.cn/sports/了，虽然是你自己的服务器，可能设置cors跨域，但是请求源终究是别人的，这样不好，所以你就需要从content传信息到background，然后从background发出请求，background还有一个优点，无视浏览器的同源策略，简单来说可以伪装请求源，可以请求每个服务器上面的数据。
+我涉及到的有background主动与content通讯，content主动与background通讯，前端页面主动与backgr
+
+### background与content通讯
+
+content.js
+``` js
+chrome.runtime.sendMessage({
+    type: 'checkInfo'     // 这个是你想发送到background的参数对象
+  }, function (response) {
+    if (response.type === 'ok') {
+      console.log(response.username) // test
+    }
+  };
+```
+
+background.js
+``` js
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse){
+  // request就是上面content发送过来的type: 'checkInfo',一个对象可以是任何数据
+  if (request.type == 'checkInfo') {
+    sendResponse({type: 'ok',username: 'test'})
+  }
+})
+```
+
+上面的代码是content主动与background通讯，相反也是可以的，background也可以主动与content通讯，把代码换下就OK了
+
+### 前端页面与background通讯
+
+前端页面.js
+
+``` js
+        let extensionId = '' //你要通讯的插件的id，每个插件的id都是唯一的
+        chrome.runtime.sendMessage(extensionId, {
+          type: 'getMessage'
+        }, response => {
+          if (!response){
+            console.log(response) //这是background的sendMessage返回来得信息
+          }
+        })
+```
+
+background.js
+
+``` js
+chrome.runtime.onMessageExternal.addListener(
+  function (request, sender, sendMessage){
+    if(request.type === 'getMessage'){
+      sendMessage('接受成功，返回对象')  // 把前端需要的信息填在sendMessage即可，
+    }
+  }
+)
+```
+既然前端可以访问background，那么background也可以访问前端页面，这个我没试过，详情可查看[通讯API](https://crxdoc-zh.appspot.com/extensions/runtime)（中文版谷歌插件API，需防墙）
+
+## 插件拦截ajax请求
+
+插件可以实时地拦截、阻止或修改请求，比如下面的代码可以拦截请求，让某个请求的响应不能返回给页面。
+
+``` js
+ chrome.webRequest.onBeforeRequest.addListener(
+        function(details) {
+          return {cancel: details.url.indexOf("www.baidu.com") != -1};
+        },
+        {urls: ["<all_urls>"]},
+        ["blocking"]);
+```
+将这段代码插入到某个页面时，会拦截所有包含"www.baidu.com"的ajax请求，详情可查看[操作请求API](https://crxdoc-zh.appspot.com/extensions/webRequest)，看到最后，虽然插件可以拦截、阻止或修改请求，但是获取不到请求的结果，这是最坑爹的，所以有什么办法呢？既然我们可以在任何时间对页面进行代码注入，所以我们就可以重写网页的内置函数。
+
+### 拦截请求并且获取请求返回来的结果
+
+我们在网页上面的head节点一加载完就插入如下代码：
+``` js
+let myFetch = window.fetch; // 把原本的fetch存在变量，下面重写fetch函数
+window.fetch = function (url, options) {
+  return new Promise(function (resolve, reject) {
+    let fetchPromise = myFetch(url, options);
+    fetchPromise.then(function (response) {
+      if (index) {
+        response.clone().json().then(
+          data => {
+            // 这是获取请求返回来的结果
+            //你可以对结果进行操作
+        });
+      }
+      return resolve(response);
+    });
+
+    fetchPromise.catch(err => {
+      return reject(err);
+    });
+  });
+};
+```
+
+::: tip clone()的用法
+Response 接口的 clone() 方法创建了一个响应对象的克隆，这个对象在所有方面都是相同的，但是存储在一个不同的变量中。
+
+如果已经使用了响应 Body，clone() 会抛出TypeError。 实际上，clone()存在的主要原因是允许多次使用Body对象(当它们是一次性使用的时候)。
+
+简单来说，当你没加clone()时，response是一次性用品，用过了再返回给原本网页，它就不接受，加了clone()后，就可以多次使用。
 :::
 
 

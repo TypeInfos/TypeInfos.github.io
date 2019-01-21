@@ -1,11 +1,22 @@
 ---
 title: 'Array内置函数'
-description: 'Array内置函数的使用'
+description: '::: tip
+测试
+:::'
 sidebarDepth: 2
 sidebar: auto
+categories: frontEnd
+date: 2017-12-28 23:39:45
+tags:
+- JS
+- Array
 ---
 
-## forEach与map
+::: tip ss
+测试
+:::
+
+### forEach与map
 ::: tip forEach与map的异同
 * 不同点:forEach没有返回值，map有返回值
 * 相同点:两者都是遍历数组：对数组的每个元素执行一次提供的函数，两者不修改调用它的原数组本身（可以在遍历的过程中用下标更改原数组的值）

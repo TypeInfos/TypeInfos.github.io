@@ -31,27 +31,17 @@ module.exports = {
       },
       {
         text: 'Tags',
-        link: '/tags'
+        link: '/tags/'
       },
       {
         text: 'Github',
         link: 'https://github.com/TypeInfos'
       }
     ],
-    // sidebar: [{
-    //     title: '个人介绍',
-    //     children: [
-    //       '/selfIntroduction'
-    //     ]
-    //   },
-    //   {
-
-    //   }
-    // ],
     // valine配置
-    valineConfig: {
-      appId: 'WVINvnvFXAbxAjirQzbDruKP-gzGzoHsz', // your appId
-      appKey: 'gar8bppl0vEVOiawaJUXrRM2', // your appKey
-    }
+    // valineConfig: {
+    //   appId: 'WVINvnvFXAbxAjirQzbDruKP-gzGzoHsz', // your appId
+    //   appKey: 'gar8bppl0vEVOiawaJUXrRM2', // your appKey
+    // }
   }
 }

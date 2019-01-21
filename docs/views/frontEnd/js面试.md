@@ -1,4 +1,14 @@
-### js中for in与for of之间的差异
+---
+title: '前端面试预备问题'
+description: 'js面试的基础'
+sidebarDepth: 2
+sidebar: auto
+categories: frontEnd
+tags:
+- 前端面试
+---
+
+# js中for in与for of之间的差异
 
 let aArray = ['a',123,{a:1,b:2}]
 

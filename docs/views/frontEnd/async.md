@@ -3,6 +3,10 @@ title: 'async的理解和使用'
 description: '用async代替大部分的promise'
 sidebarDepth: 2
 sidebar: auto
+categories: frontEnd
+tags:
+- 前端
+- async/await
 ---
 
 ::: tip
