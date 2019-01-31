@@ -1,5 +1,12 @@
 module.exports = {
   theme: 'reco',
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@alias': '/public'
+      }
+    }
+  },
   themeConfig: {
     showParticles: false,
     // particlesConfig: {
@@ -10,24 +17,38 @@ module.exports = {
     //   zIndex: -1, // z-index property of the background, default: -1.
     // },
   },
-  title: 'website', // 设置网站标题
+  title: '个人网站', // 设置网站标题
   description: 'website',
   base: '/',
   markdown: {
     lineNumbers: true
   },
   themeConfig: {
-    nav: [{
+    nav: [
+      {
+        text: '首页',
+        link: '/'
+      },
+      {
         text: '分类',
-        items: [{
+        items: [
+          {
             text: '前端',
             link: '/categories/frontEnd'
           },
           {
             text: '后端',
             link: '/categories/backEnd'
+          },
+          {
+            text: '你不知道的JavaScript',
+            link: 'categories/'
           }
         ]
+      },
+      {
+        text: '关于我',
+        link: '/about/'
       },
       {
         text: 'Tags',
