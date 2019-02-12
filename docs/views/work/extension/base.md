@@ -3,6 +3,7 @@ title: '谷歌插件的开发'
 description: '谷歌插件的内部通讯'
 sidebarDepth: 2
 sidebar: auto
+categories: work
 ---
 
 ## 谷歌插件的大致内容

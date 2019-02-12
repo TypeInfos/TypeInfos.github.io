@@ -12,8 +12,8 @@ tags:
 - Array
 ---
 
-::: tip ss
-测试
+::: tip 概述
+常用的array的对比与使用
 :::
 
 ## forEach与map
