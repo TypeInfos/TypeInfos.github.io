@@ -37,12 +37,12 @@ module.exports = {
             link: '/categories/frontEnd'
           },
           {
-            text: '后端',
-            link: '/categories/backEnd'
+            text: '工作',
+            link: '/categories/work'
           },
           {
-            text: '你不知道的JavaScript',
-            link: 'categories/'
+            text: '爱好',
+            link: '/categories/hobby'
           }
         ]
       },

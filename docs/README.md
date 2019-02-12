@@ -11,7 +11,7 @@ features:
 - title: 技术难题
   details: 碰到的一些难题及解决方法
 - title: 自我消遣
-  details: 发发闷骚
+  details: 平时的小笔记
 footer: Copyright © 2019-陈金伙
 ---
 
