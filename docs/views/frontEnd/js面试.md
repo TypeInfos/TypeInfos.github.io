@@ -122,7 +122,7 @@ const [first, ...rest, last] = [1, 2, 3, 4, 5];
 // [ "h", "e", "l", "l", "o" ]
 ```
 
-### Vue的data是怎么实现
+## Vue的data是怎么实现
 
 在Vue早期版本的时候是用
 ``` js
@@ -135,7 +135,7 @@ Object.defineProperty(key, prop, {
 })
 ```
 现在的Vue是基于ES6的proxy的实现，因为跟更改，区别就是:......
-### 去重数组
+## 去重数组
 ``` js
 function dedupe(array) {
   return Array.from(new Set(array));
@@ -143,15 +143,15 @@ function dedupe(array) {
 dedupe([1, 1, 2, 3]) // [1, 2, 3]
 ```
 
-### 上传图片
+## 上传图片
 用鼠标拖图片在网页上预览图片
 
-### Vue兄弟间怎么检测数据变换
+## Vue兄弟间怎么检测数据变换
 1. 在有些情况下可以用路由传参
 2. 用Vuex作为载体传参、监听
 3. 用兄弟的父元素来监听两个子组件的变换统一分配数据
 
-### Vue中的计算属性可以调用计算属性吗？
+## Vue中的计算属性可以调用计算属性吗？
 
 答案是不可以，在调用后会提示：`Maximum call stack size exceeded`，
 计算属性是在调用后才执行里的语句，跟函数是一样的。
