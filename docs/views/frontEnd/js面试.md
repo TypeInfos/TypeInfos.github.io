@@ -142,9 +142,9 @@ function dedupe(array) {
 }
 dedupe([1, 1, 2, 3]) // [1, 2, 3]
 ```
-
+<!--
 ## 上传图片
-用鼠标拖图片在网页上预览图片
+用鼠标拖图片在网页上预览图片 -->
 
 ## Vue兄弟间怎么检测数据变换
 1. 在有些情况下可以用路由传参
@@ -155,6 +155,14 @@ dedupe([1, 1, 2, 3]) // [1, 2, 3]
 
 答案是不可以，在调用后会提示：`Maximum call stack size exceeded`，
 计算属性是在调用后才执行里的语句，跟函数是一样的。
+
+## 用indexOf来实现简易版的include
+
+```js
+Array.prototype.myIncludes = function(e){
+  return this.indexOf(e) !== -1
+}
+```
 
 
 
