@@ -164,6 +164,50 @@ Array.prototype.myIncludes = function(e){
 }
 ```
 
+## 排序对象数组
+
+```js
+        const compareAscending = function(propName) {
+          return function(obj1, obj2) {
+            var val1 = obj1[propName];
+            var val2 = obj2[propName];
+            if (val1 < val2) {
+              return -1;
+            } else if (val1 > val2) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }
+        }
+        const compareDescending = function(propName) {
+          return function(obj1, obj2) {
+            var val1 = obj1[propName];
+            var val2 = obj2[propName];
+            if (val1 > val2) {
+              return -1;
+            } else if (val1 < val2) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }
+        }
+        // 调用
+        let t = [{
+          a:1,
+          b:2
+        },{
+          a: 2,
+          b: 3
+        }]
+        // 传入属性名
+        t.sort(compareDescending('a'))
+```
+
+## 防抖&节流
+
+
 
 
 
