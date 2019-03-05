@@ -24,7 +24,7 @@ tags:
 ### legand
 图例组件，可以通过点击图例控制哪些系列不显示。比如如下的营收占比，
 ![](../../.vuepress/public/echart1.jpg) -->
-<!-- 可以配置位置(left,top...)、宽高(width\height)、图例之间的距离(itemGap)、图例的宽高(itemWidth、itemHeight)、格式化图例(formatter)[等等](https://www.echartsjs.com/option.html#legend)<br>
+可以配置位置(left,top...)、宽高(width\height)、图例之间的距离(itemGap)、图例的宽高(itemWidth、itemHeight)、格式化图例(formatter)[等等](https://www.echartsjs.com/option.html#legend)<br>
 ### grid
 grid可以是个数组对象，每个数组对象表示一个图表的配置，可以配置离容器的top、left，图表的宽高(默认是继承容器的宽高)
 ### rich
@@ -71,6 +71,7 @@ nameGap: 'Number' => 坐标轴名称与轴线之间的距离。 Y轴的轴名与
 ![](../../.vuepress/public/echart3.png)
 ### series
 系列列表。每个系列通过 type 决定自己的图表类型，每个type都有自己的对象。
+## 曲线图例子
 
 
 
