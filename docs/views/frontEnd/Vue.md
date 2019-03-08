@@ -185,7 +185,102 @@ npm install pinyin
       })
     }
 ```
+## slot
+::: tip slot
+slot是父组件与子组件的通讯方式，可以将父组件的内容显示在子组件当中。
+:::
+普通slot的用法，只有一个slot。<br>
+新建slot.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <say-to p-name="豆豆">你是睿智吧</say-to>
+    <say-to p-name="水水">你也是睿智</say-to>
+    <say-to p-name="大大">你管管他们两</say-to>
+  </div>
+  <script src="./testSlot.js"></script>
+</body>
+</html>
+```
+新建slot.js
+```js
+const SayTo = {
+  props: {
+    pName: String
+  },
+  template: `
+    <div>
+      你好<strong>{{ pName }}</strong>
+      <slot></slot>
+    </div>
+  `
+}
 
+let app = new Vue({
+  el: '#app',
+  components: {
+    SayTo
+  }
+})
+```
+组合slot的用法，多个slot的组合，也叫具名slot。<br>
+新建combinedSlot.index
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <nba-all-start c="奥尼尔" pf="加内特">
+      <span slot="sf">皮尔斯</span>
+      <span slot="sg">雷阿伦</span>
+      <span slot="pg">隆多</span>
+    </nba-all-start>
+  </div>
+  <script src="./combinedSlot.js"></script>
+</body>
+</html>
+```
+新建combinedSlot.js
+```js
+const NbaAllStart = {
+  props: {
+    c: String,
+    pf: String
+  },
+  template: `
+    <div>
+      <div>中锋： {{ c }}</div>
+      <div>大前： {{ pf }}</div>
+      <div>小前： <slot name="sf"></slot></div>
+      <div>大前： <slot name="sg"></slot></div>
+      <div>大前： <slot name="pg"></slot></div>
+      <slot></slot>
+    </div>
+  `
+}
+let app = new Vue({
+  el: '#app',
+  components: {
+    NbaAllStart
+  }
+})
+```
 ## router
 ::: tip 
 Vue router的用处就是在单页应用中通过router与component的交互，演变成类似多页面，但是路由变化时并没有重新刷新页面和请求后端资源，只是页面div的替换，因此页面切换速度非常快。
