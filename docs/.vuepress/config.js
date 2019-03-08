@@ -17,7 +17,7 @@ module.exports = {
     //   zIndex: -1, // z-index property of the background, default: -1.
     // },
   },
-  title: '个人网站', // 设置网站标题
+  title: 'Kent', // 设置网站标题
   description: 'website',
   base: '/',
   markdown: {

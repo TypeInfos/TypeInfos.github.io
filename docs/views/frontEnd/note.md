@@ -1,19 +1,20 @@
 ---
-title: '题目名字'
+title: '前端小笔记'
   # 大标题
 sidebarDepth: 2
 sidebar: auto
-categories: else
+categories: frontEnd
 # 分类 共有三个分类： frontEnd work else
 date: 2019-02-12
 # 时间
 tags:
-- 程序的一些额外知识
+- 前端
+- 笔记
 # 标签
 ---
 
 ::: tip 概述
-
+当遇到一些要死机的东西时会记在这边。
 :::
 
 ## http状态码
@@ -52,14 +53,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 color: #666; 
 }
 ```
-
-#### 小标题
-
-## 第二个大标题
-
-### 中标题
-
-#### 小标题
 
 
 

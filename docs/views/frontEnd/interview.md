@@ -1,5 +1,5 @@
 ---
-title: '初级前端面试问题'
+title: '初级前端工程师面经'
 description: 'js面试的基础'
 sidebarDepth: 2
 sidebar: auto
@@ -168,46 +168,82 @@ Array.prototype.myIncludes = function(e){
 ## 排序对象数组
 
 ```js
-        const compareAscending = function(propName) {
-          return function(obj1, obj2) {
-            var val1 = obj1[propName];
-            var val2 = obj2[propName];
-            if (val1 < val2) {
-              return -1;
-            } else if (val1 > val2) {
-              return 1;
-            } else {
-              return 0;
-            }
-          }
-        }
-        const compareDescending = function(propName) {
-          return function(obj1, obj2) {
-            var val1 = obj1[propName];
-            var val2 = obj2[propName];
-            if (val1 > val2) {
-              return -1;
-            } else if (val1 < val2) {
-              return 1;
-            } else {
-              return 0;
-            }
-          }
-        }
-        // 调用
-        let t = [{
-          a:1,
-          b:2
-        },{
-          a: 2,
-          b: 3
-        }]
-        // 传入属性名
-        t.sort(compareDescending('a'))
+const compareAscending = function (propName) {
+  return function (obj1, obj2) {
+    var val1 = obj1[propName]
+    var val2 = obj2[propName]
+    if (val1 < val2) {
+      return -1
+    } else if (val1 > val2) {
+      return 1
+    } else {
+      return 0
+    }
+  }
+}
+const compareDescending = function (propName) {
+  return function (obj1, obj2) {
+    var val1 = obj1[propName]
+    var val2 = obj2[propName]
+    if (val1 > val2) {
+      return -1
+    } else if (val1 < val2) {
+      return 1
+    } else {
+      return 0
+    }
+  }
+}
+// 调用
+let t = [{
+  a: 1,
+  b: 2
+}, {
+  a: 2,
+  b: 3
+}]
+// 传入属性名
+t.sort(compareDescending('a'))
+
 ```
-
 ## 防抖&节流
+::: tip 防抖
+防抖是用来制止某个事件在短时间内被连续触发，比如：用户在输入框输入文字的时候，需要请求后台来联想数据，如果没有加防抖时，用户每输入一个字或者每变换一个字时，都需要请求后端，有点浪费资源，这时可以加入防抖函数，在用户稍微停顿输入的时候再请求后端岂不是更好。
+:::
+```js
+const antiShake = (fn, context, delay, args) => {
+    clearTimeout(fn.timeoutID);
+  //  在delay秒之内连续触发会刷新setTimeout，从而不能执行到fn
+  fn.timeoutID = setTimeout(function () {
+    fn.call(context, args);
+  }, delay)
+}
+```
+::: tip 节流
+节流是让某个事件在执行完后过一段时间才能再次被触发，比如用来限制刷新按钮，当用户疯狂刷新，比如一秒刷新100次，我们就得向后端发送100次的请求，加了节流后端，可以自定义当第一次刷新后过几秒才能再次发起刷新事件。
+:::
+```js
+const throttle = (fn, context, delay, args) => {
+  // 判断是否是第一次执行，第一次执行给fn添加属性canRun:true
+  if (!fn.hasOwnProperty('canRun')) {
+    Object.assign(fn, {
+      canRun: true
+    })
+  }
+  if (!fn.canRun) {
+    return
+  }
+  // 执通过关卡if(!canRun)，等于就拿到了通行证。然后下一步的操作就是立马将关卡关上canRun=false。
+  // 这样，其他请求执行滚动事件的方法，就被挡回去了
+  fn.canRun = false
+  setTimeout(() => {
+    fn.call(context, args)
+    // 执行完一次后delay秒后才能再执行一次
+    fn.canRun = true
+  }, delay)
+}
 
+```
 
 
 

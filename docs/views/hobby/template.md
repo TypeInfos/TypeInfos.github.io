@@ -3,7 +3,7 @@ title: '题目名字'
   # 大标题
 sidebarDepth: 2
 sidebar: auto
-categories: else
+categories: 
 # 分类 共有三个分类： frontEnd work else
 date: 2019-02-12
 # 时间
