@@ -59,6 +59,10 @@ git push origin master
 :::
 3. 将master的内容合并到dev分支上
 `git merge master`
+## git fetch
+::: tip 
+更新远程代码到本地仓库，经常用这个来检测别人是否push上去了没。
+:::
 ## Commit 规范
 ::: tip Git Commit
 Git 每次提交代码，都要写 Commit message（提交说明），否则就不允许提交。

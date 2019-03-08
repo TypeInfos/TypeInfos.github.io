@@ -111,7 +111,40 @@ export default function request(api, options = {}) {
 
 ```
 
-### 中标题
+## pug
+安装命令
+`npm install pug pug-loader pug-filters -D`
+在`webpack.base.conf`文件，在`module`的`rule`对象添加以下代码:
+```js
+  {
+    test: /\.pug$/,
+    loader: 'pug'
+  }
+```
+## Eslint
+```js
+rules: {
+    // 强制 “for” 循环中更新子句的计数器朝着正确的方向移动
+    'for-direction': 'warn',
+    // 强制 getter 函数中出现 return 语句
+    'getter-return': 'error',
+    // 禁止空块语句
+    'no-empty': 'error',
+    // 关闭强制 generator 函数中 * 号周围使用一致的空格
+    'generator-star-spacing': 'off',
+    // allow debugger during development
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'indent': ["error", 2],
+    // 禁止使用 空格 和 tab 混合缩进
+    'no-mixed-spaces-and-tabs': 'error',
+    // 一些风格指南不允许使用 tab 字符，包括在注释内
+    'no-tabs': 'off',
+    // 禁止使用分号
+    'semi': ['error', 'never'],
+    // ["error", "never"]不允许函数括号之间存在空格
+    "space-before-function-paren": ["error", "never"]
+  }
+```
 
 #### 小标题
 

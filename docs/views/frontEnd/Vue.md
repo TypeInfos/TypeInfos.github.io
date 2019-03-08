@@ -26,26 +26,7 @@ tags:
 ```
 @dblclick="navDblclick(data)"
 ```
-## Eslint
-```js
-rules: {
-// 强制 “for” 循环中更新子句的计数器朝着正确的方向移动
-'for-direction': 'error',
-// 强制 getter 函数中出现 return 语句
-'getter-return': 'error',
-// 禁止空块语句
-'no-empty': 'error',
-    'generator-star-spacing': 'off',
-    'no-return-await': 'off',
-    // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'indent': 0,
-    'no-mixed-spaces-and-tabs': 'error',
-    'no-tabs': 'off',
-    'semi': [2, 'never'],
-    "space-before-function-paren": [0, "always"], //["error", "never"]不允许函数括号之间存在空格
-}
-```
+
 
 ## pingyin
 ::: tip
