@@ -1,11 +1,12 @@
 ---
-title: '前端面试预备问题'
+title: '初级前端面试问题'
 description: 'js面试的基础'
 sidebarDepth: 2
 sidebar: auto
 categories: frontEnd
 tags:
-- 前端面试
+- 面试
+- 前端
 ---
 
 ## js中for in与for of之间的差异

@@ -17,6 +17,7 @@ tags:
 icon theme:`Material Icon Theme`
 color theme:`one dark pro`
 
+
 ## setting.json
 ```js
 {
@@ -66,21 +67,5 @@ color theme:`one dark pro`
     // 控制终端的渲染方式。
     "terminal.integrated.rendererType": "dom"
 }
-```
-## Eslinttrc
-```js
-rules: {
-    // allow async-await
-    // 在生成器函数中执行*操作符周围的一致间距
-    'generator-star-spacing': 'off',
-    
-    'no-return-await': 'off',
-    // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'indent': 0,
-    'no-mixed-spaces-and-tabs': 'error',
-    'no-tabs': 'off',
-    'semi': [2, 'never'],
-    "space-before-function-paren": [0, "always"], //["error", "never"]不允许函数括号之间存在空格
 ```
 
