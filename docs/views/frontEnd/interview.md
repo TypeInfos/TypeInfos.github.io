@@ -245,7 +245,160 @@ const throttle = (fn, context, delay, args) => {
 
 ```
 
+## 正则表达式
+### 中文
+::: tip 中文正则
+“\u4e00”和“\u9fa5”是unicode编码，并且正好是中文编码的开始和结束的两个值，所以这个正则表达式可以用来判断字符串中是否包含中文
+:::
+匹配中文就可以用:`/^[\u4e00-\u9fa5]/`
 
+## https
+::: tip https
+HTTPS即加密的HTTP，HTTPS并不是一个新协议，而是HTTP+SSL（TLS）。原本HTTP先和TCP（假定传输层是TCP协议）直接通信，而加了SSL后，就变成HTTP先和SSL通信，再由SSL和TCP通信，相当于SSL被嵌在了HTTP和TCP之间
+:::
 
+## NaN
+::: tip NaN
+NaN是全局属性，初始值就是NaN和Number.NaN的值是一样的，NaN和任何值都不相等，包括自身。可以通过x!==x来判断是否为NaN，为true就是NaN
+:::
+基本都没用到NaN，只是有时判断的时候有用到
+```js
+parseInt("blabla") // NaN
+Math.sqrt(-2) // NaN
+'A' - 'B' // NaN
+1 + -'1' + 1 // 1 负号把'1'数字化了
+Number('abc') // NaN
+```
 
-
+## css reset
+1. reset 的目的不是清除浏览器的默认样式，这仅是部分工作。清除和重置是紧密不可分的。
+2. reset 的目的不是让默认样式在所有浏览器下一致，而是减少默认样式有可能带来的问题。
+3. reset 期望提供一套普适通用的基础样式。但没有银弹，推荐根据具体需求，裁剪和修改后再使用。
+::: tip 引发的问题
+1. *{}会带来性能问题
+2. 使用通配符存在隐性问题
+:::
+::: tip
+这里推荐一个轻量级的css reset方案：normalize.css，它可以在元素样式上提供了跨浏览器的高度一致性。
+:::
+## &lt;img>的title和alt有什么区别
+- title是global attributes之一，用于为元素提供附加的advisory information。通常当鼠标滑动到元素上的时候显示。
+- alt是&lt;img>的特有属性，是图片内容的等价描述，用于图片无法加载时显示、读屏器阅读图片。可提图片高可访问性，除了纯装饰图片外都必须设置有意义的值，搜索引擎会重点分析。（理解，可以自己讲出就好）
+## 跨域的问题
+::: tip 什么情况下会产生跨域
+- 协议不相同
+- 域名不相同
+- 端口不相同
+:::
+满足其中一个就会产生跨域。<br>
+跨域通信：js进行DOM操作、通信时如果目标与当前窗口不满足同源条件，浏览器为了安全会阻止跨域操作。跨域通信通常有以下方法：
+### 解决跨域的方法
+ 最普遍的就是CORS，就是后端允许我们的本地的请求地址或线上域名 
+## js有哪几种方式里检查数据类型：
+```js
+let a = "cjh";
+let b = 222;
+let c= [1,2,3];
+let d = new Date();
+let e = function(){alert(111);};
+let f = function(){this.name="22";};
+```
+### typeof 
+::: tip
+*可以判断function的类型；在判断除Object类型的对象时比较方便*
+不能区分array和object
+:::
+```js
+alert(typeof a)   ------------> string
+alert(typeof b)   ------------> number
+alert(typeof c)   ------------> object => array
+alert(typeof d)   ------------> object => new Date
+alert(typeof e)   ------------> function
+alert(typeof f)   ------------> function
+```
+### instanceof 
+::: tip
+*后面一定要是对象类型，并且大小写不能错，该方法适合一些条件选择或分支*
+挺好用的，就是要区分大小写，自己写继承类的时候用这个比较好。<br>
+instanceof在对象直接继承和间接继承的都会报true。
+:::
+```js
+alert(c instanceof Array) ---------------> true
+alert(d instanceof Date)  ---------------> true
+alert(f instanceof Function) ------------> true
+alert(f instanceof function) ------------> false
+```
+### constructor *构造器*
+```js
+alert(c.constructor === Array) ----------> true
+alert(d.constructor === Date) -----------> true
+alert(e.constructor === Function) -------> true
+注意： constructor 在类继承时会出错
+eg：
+      function A(){};
+      function B(){};
+      A.prototype = new B(); //A继承自B
+      var aObj = new A();
+      alert(aobj.constructor === B) -----------> true;
+      alert(aobj.constructor === A) -----------> false;
+// 而instanceof方法不会出现该问题，对象直接继承和间接继承的都会报true：
+      alert(aobj instanceof B) ----------------> true;
+      alert(aobj instanceof B) ----------------> true;
+// 言归正传，解决construtor的问题通常是让对象的constructor手动指向自己：
+      aobj.constructor = A; //将自己的类赋值给对象的constructor属性
+      alert(aobj.constructor === A) -----------> true;
+      alert(aobj.constructor === B) -----------> false; 
+//基类不会报true了;不过规范一点的话，继承后必须把constructor指向它的父类
+```
+### prototype.toString
+::: tip
+*大小写不能写错，比较麻烦，但胜在通用*
+:::
+```js
+alert(Object.prototype.toString.call(a) === ‘[object String]’) -------> true;
+alert(Object.prototype.toString.call(b) === ‘[object Number]’) -------> true;
+alert(Object.prototype.toString.call(c) === ‘[object Array]’) -------> true;
+alert(Object.prototype.toString.call(d) === ‘[object Date]’) -------> true;
+alert(Object.prototype.toString.call(e) === ‘[object Function]’) -------> true;
+alert(Object.prototype.toString.call(f) === ‘[object Function]’) -------> true;
+```
+## XSS和CSRF区别
+### XSS
+跨站点攻击。xss攻击的主要目的是想办法获取目标攻击网站的cookie，因为有了cookie相当于有了session，有了这些信息就可以在任意能接进互联网的PC登陆该网站，并以其他人的身份登陆做破坏。预防措施防止下发界面显示html标签，把</>等符号转义。
+### CSRF
+跨站点伪装请求。csrf攻击的主要目的是让用户在不知情的情况下攻击自己已登录的一个系统，类似于钓鱼。如用户当前已经登陆了邮箱或bbs，同时用户又在使用另外一个，已经被你控制的网站，我们姑且叫它钓鱼网站。这个网站上面可能因为某个图片吸引你，你去点击一下，此时可能就会触发一个js的点击事件，构造一个bbs发帖的请求，去往你的bbs发帖，由于当前你的浏览器状态已经是登陆状态，所以session登陆cookie信息都会跟正常的请求一样，纯天然的利用当前的登陆状态，让用户在不知情的情况下，帮你发帖或干其他事情。预防措施，请求加入随机数，让钓鱼网站无法正常伪造请求。
+## dom事件中target，currentTarget的区别
+target:当前被涉及到的对象<br>
+currentTarget:事件绑定的元素
+## vue的双向绑定
+::: tip
+Object.defineProperty的getter和setter机制
+:::
+```js
+//object.defineProperty()
+var obj = new Object();
+var value;
+Object.defineProperty(obj,'name',{
+    get: function () {
+        console.log('get it');
+        return value;//必须return一个值，作为name属性的值
+    },
+    set: function (newvalue) {
+        console.log('set it');
+        value = newvalue;//同步把value的值进行更新
+    }
+});
+console.log(obj);
+console.log(obj.name);//get it
+obj.name = 1234;//set it
+console.log(obj.name);//get it
+```
+ 后来Vue更新了，用ES6的proxy代替了Object.defineProperty
+ ## Array.prototype.sort
+ Google Chrome 对 sort 做了特殊处理，对于长度 <= 10 的数组使用的是插入排序(稳定排序算法) ，>10 的数组使用的是快速排序。快速排序是不稳定的排序算法。
+## 闭包
+::: tip 闭包
+变量的作用域与非就是两种：全局变量、局部变量<br>
+函数内部可以直接读取全局变量<br>
+作用：使私有变量（局部变量）能够转换被多个函数共享，而不被能解析器从内存中释放掉
+:::

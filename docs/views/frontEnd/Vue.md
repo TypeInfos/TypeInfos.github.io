@@ -18,6 +18,7 @@ tags:
 国产好用的MVVM框架（View的状态和行为抽象化），相对于react比较好入门，一些是一些自己的理解和笔记。
 :::
 
+
 ## 点击事件
 ### 鼠标右击事件
 ```js
@@ -281,6 +282,91 @@ let app = new Vue({
   }
 })
 ```
+### Vue2.6废除前两个slot用法，新增的用法
+新建newSlot.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
+  <title>newSlot</title>
+</head>
+<body>
+  <div id="app">
+    <test-new-slot></test-new-slot>
+  </div>
+  <script src="./combinedSlot.js"></script>
+</body>
+</html>
+```
+新建newSlot.js
+```js
+const NbaAllStart = {
+  props: {
+    c: String,
+    pf: String
+  },
+  data(){
+    return {
+      test: {
+        one: 1,
+        two: 2
+      }
+    }
+  },
+  template: `
+  <div class="container">
+  <header>
+    <slot name="header" v-bind:test="test"></slot>
+  </header>
+  <main>
+    <slot></slot>
+  </main>
+  <footer>
+    <slot name="footer"></slot>
+  </footer>
+</div>
+  `
+}
+const TestNewSlot = {
+  components: {
+    NbaAllStart
+  },
+  data(){
+    return {
+      test1: {
+        one: 11,
+        two: 22
+      }
+    }
+  },
+  template: `
+  <nba-all-start>
+  <template v-slot:header="test">
+    <h1>Here might be a page title{{ test.test.one }}</h1>
+  </template>
+  <template v-slot:default>
+    <p>A paragraph for the main content.</p>
+    <p>And another one.</p>
+  </template>
+  <template v-slot:footer>
+    <p>Here's some contact info</p>
+  </template>
+</nba-all-start>
+  `
+}
+
+let app = new Vue({
+  el: '#app',
+  components: {
+    TestNewSlot
+  }
+})
+
+```
 ## router
 ::: tip 
 Vue router的用处就是在单页应用中通过router与component的交互，演变成类似多页面，但是路由变化时并没有重新刷新页面和请求后端资源，只是页面div的替换，因此页面切换速度非常快。
@@ -404,6 +490,79 @@ let app = new Vue({
 })
 ```
 上面代码讲的是路由嵌套的使用，也是基本项目最常用到的结构。
+## 工作中一些可以直接套的样式与组件
+::: tip element
+用之前先全局改字体为12px，因为系统大部分都是12px
+:::
+### el-select
+```html
+        <div class="cjh-input-select">
+          <div class="cjh-input-box-label">项目</div>
+          <el-select v-model="manager" @change="filterChange">
+            <!-- <el-option v-for="item in managerList" :key="item.key" :value="item.loginName" :label="item.userName"></el-option> -->
+          </el-select>
+        </div>
+```
+```css
+  .cjh-input-select {
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 12px;
+    align-content: center;
+    .cjh-input-box-label {
+      line-height: 28px;
+      margin-right: 5px;
+    }
+    .el-input__inner {
+      height: 28px;
+    }
+    .el-input__suffix {
+      top: 4px;
+    }
+  }
+```
+## minxin vue
+::: tip
+值为对象的选项，例如 methods, components 和 directives，将被混合为同一个对象。两个对象键名冲突时，取组件`自己`对象的键值对。
+:::
+```js
+var mixin = {
+  methods: {
+    foo: function () {
+      console.log('foo')
+    },
+    conflicting: function () {
+      console.log('from mixin')
+    }
+  }
+}
 
+var vm = new Vue({
+  mixins: [mixin],
+  methods: {
+    bar: function () {
+      console.log('bar')
+    },
+    conflicting: function () {
+      console.log('from self')
+    }
+  }
+})
 
+vm.foo() // => "foo"
+vm.bar() // => "bar"
+vm.conflicting() // => "from self"
+```
+## vue router地址栏传参
+```js
+// 用来传参
+this.$router.push({ name: 'page', query: { type: -1, name: 'rootRadar' } })
+// 用来接收参数
+this.$route.query.type
+```
+::: tip 注意事项
+可以传对象，但是地址栏会出现一些乱码，目标页也可以接收的到对象，但是目标页刷新下就会失去这个对象因为地址栏不支持保存对象，所以传过去的时候用JSON.stringify转成字符串，接收的时候再转成对象。
+:::
 
+## 什么时候用到Vuex
+如果数据传到后台，不同的组件使用的话，都可以从后台拿到数据，只是网络请求开销比较大，父子组件通信的话，可以直接emit,而多层嵌套组件通信就需要有vuex这样的解决方案，公共数据托管在state里，不同的组件都可以拿到这个数据。

@@ -53,6 +53,19 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 color: #666; 
 }
 ```
+## Http Options Method
+::: tip Option Method
+OPTIONS请求方法的主要用途有两个：
+1、获取服务器支持的HTTP请求方法；
+2、用来检查服务器的性能。
+:::
+
+## MutationObserver
+::: tip MutationObserver API
+Mutation Observer API 用来监视 DOM 变动。DOM 的任何变动，比如节点的增减、属性的变动、文本内容的变动，这个 API 都可以得到通知
+:::
+[api地址](https://wangdoc.com/javascript/dom/mutationobserver.html)
+
 
 
 
