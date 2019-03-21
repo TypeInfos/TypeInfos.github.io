@@ -66,6 +66,39 @@ Mutation Observer API 用来监视 DOM 变动。DOM 的任何变动，比如节�
 :::
 [api地址](https://wangdoc.com/javascript/dom/mutationobserver.html)
 
+## npm
+### 查看本地（该仓库）安装了哪些包
+`npm list --depth=0`
+### 查看全局（-g）安装了哪些包
+`npm list --depth=0 --global`
+### 安装包
+`npm install xxx`
+安装`xxx`模块到当前命令行所在的目录
+`npm install -g xxx`
+利用npm安装全局模块xxx
+### 本地安装
+::: tip
+本地安装时将模块写入package.json中，方便别人install
+:::
+`npm install xxx`<br>
+安装但不写入package.json
+`npm install xxx --save`<br>
+安装并写入package.json的`dependencies`中
+`npm install xxx --save-dev`<br>
+安装并写入package.json的`devDependencies`中
+### dependencies & devDependencies
+`devDependencies`是只会在开发环境下依赖的模块，生产环境不会被打入包内<br>
+`dependencies`依赖的包不仅开发环境能使用，生产环境也能使用
+### 删除包
+::: tip
+删除本地模块时你应该思考的问题：是否将在package.json上的相应依赖信息也消除？
+:::
+`npm uninstall xxx`<br>
+删除模块，但不删除模块留在package.json中的对应信息
+`npm uninstall xxx --save`<br>
+删除模块，同时删除模块留在package.json中dependencies下的对应信息
+`npm uninstall xxx --save-dev`<br>
+删除模块，同时删除模块留在package.json中devDependencies下的对应信息
 
 
 
