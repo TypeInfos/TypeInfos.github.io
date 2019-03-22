@@ -99,6 +99,30 @@ Mutation Observer API 用来监视 DOM 变动。DOM 的任何变动，比如节�
 删除模块，同时删除模块留在package.json中dependencies下的对应信息
 `npm uninstall xxx --save-dev`<br>
 删除模块，同时删除模块留在package.json中devDependencies下的对应信息
-
-
-
+## JS模块化
+### CommonJS
+::: tip
+同步模块加载，不适合网络请求
+:::
+新建say.js
+```js
+exports.blog = {
+  say: function(){
+    return 'say function'
+  }
+}
+```
+新建test.js
+```js
+let say = require('./one').blog
+console.log(say.say()) // say function'
+```
+### AMD
+::: tip
+Asynchronous Module Definition(异步组件定义)，提前加载依赖
+:::
+### CMD
+::: tip
+Common Module Definition，AMD的优化版，依赖后置，使用时才加载，
+RequireJS提供延迟加载功能
+:::
