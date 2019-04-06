@@ -402,3 +402,115 @@ console.log(obj.name);//get it
 函数内部可以直接读取全局变量<br>
 作用：使私有变量（局部变量）能够转换被多个函数共享，而不被能解析器从内存中释放掉
 :::
+## 编写一个Javascript函数，传入一个数组，对数组中的元素进行去重并返回一个无重复元素的数组，数组的元素可以是数字、字符串、数组和对象。举例说明：
+::: tip 
+1. 如传入的数组元素为[123, "meili", "123", "mogu", 123],则输出：[123, "meili", "123", "mogu"]
+2. 如传入的数组元素为[123, [1, 2, 3], [1, "2", 3], [1, 2, 3], "meili"],则输出：[123, [1, 2, 3], [1, "2", 3], "meili"]
+3. 如传入的数组元素为[123, {a: 1}, {a: {b: 1}}, {a: "1"}, {a: {b: 1}}, "meili"],则输出：[123, {a: 1}, {a: {b: 1}}, {a: "1"}, "meili"]
+:::
+```js
+Array.prototype.unique = function(){
+  let hash = new Map()
+  let result = []
+  let item
+  for (let i = 0; i < this.length; i++) {
+    console.log(Object.prototype.toString.call(this[i]))
+    if (Object.prototype.toString.call(this[i]) === '[object Object]'
+      || Object.prototype.toString.call(this[i]) === '[object Array]') {
+      item = JSON.stringify(this[i])
+    } else {
+      item = this[i]
+    }
+    if (!hash.has(item)) {
+      hash.set(item, true)
+      result.push(this[i])
+    }
+  }
+  return result
+}
+```
+## js 快速排序
+```js
+function quickSort(arr, left, right) {
+     //为了防止剩一个数时再进行计算
+    if (left < right) {
+        //设置最左边的元素为基准点：pivot
+    let p = arr[left];
+    //把要排序的序列中比p大的放到右边，比p小的放到左边，p的下标位置为i
+    let i = left,
+        j = right;
+    while(i<j)
+    {
+        //j向左移，找到一个比p小的元素，直到找到小于p的数就停止在j下标上
+        while(arr[j] >= p && i < j){
+            j--;
+        }
+        //i向右移，找到一个比p大的元素
+        while(arr[i] <= p && i < j){
+            i++;
+        }
+        //当i和j不相等的时候交换
+        if (i<j){
+            let temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    arr[left] = arr[i];
+    arr[i] = p;
+      //i-1,i+1是为了让当前基准点继续参加排序
+    quickSort(arr,left,i - 1);
+    quickSort(arr, i + 1, right);
+    }
+    return arr;
+}
+var arr = [1,3,4,2,45,2,92,0,-2];
+console.log(quickSort(arr,0,arr.length-1));
+```
+## null && undefined
+::: tip
+在JavaScript规范中提到，要比较比较相等之前，不能将nullundefined转换成其他任何值，并且规定null和undefined是相等。null和undefined都代表无效的值。
+:::
+全等于状态下，是false，这个很好理解了。它们不属于同一类型数据。
+```js
+console.log( undefined === null ) // false
+typeof null        //object
+typeof undefined       //undefined
+```
+## Number && parseInt && parseFloat
+### Number
+如果是Boolean值，true和false值将分别被转换为1和0。<br/>
+如果是数字值，只是简单的传入和返回。<br/>
+如果是null值，返回0。<br/>
+如果是undefined，返回NaN。<br/>
+如果是字符串：<br/>
+* 如果字符串中只包含数字时，将其转换为十进制数值，即“1”变成1，“123”变成123，而“011”会变成11
+* 如果字符串中包含有效的浮点格式，如“1.1”，则将其转换为对应的浮点数值
+* 如果字符串中包含有效的十六进制格式，例如“0xf”，则将其转换为相同大小的十进制整数值
+* 如果字符串是空的（不包含任何字符），则将其转换为0
+* 如果字符串中包含除上述格式之外的字符，则将其转换成NaN
+### parseInt
+在转换字符串时，更多的是看是否符合数值模式。会忽略字符串前面的空格，直至找到第一个非空格字符。
+* 如果第一个字符不是数字字符或负号，`parseInt()`就会返回NaN，也就是说用`parseInt()`转换空字符时会返回NaN
+* 如果第一个字符串是数字字符，parseInt()会继续解析第二个字符，直到解析完所有后续字符或者遇到一个非数字字符。例如，“123blue”会被转换为123，因为“blue”会被完全忽略，类似低“22.5”会被转换成22，因为小数点不是有效数字字符
+* 如果字符串以“0x”开头且后跟数字字符，就会将其当作一个十六进制整数
+* 如果字符串以“0”开头且后跟数字字符，就会将其当作一个八进制整数
+* parseInt()函数增加了第二参数用于指定转换时使用的基数（即多少进制）
+`parseInt("10",16)//按十六进制解析`
+`parseInt("10",8)//按八进制解析`
+### parseFloat
+与parseInt类似，parseFloat也是con第一个字符开始解析每个字符，而且也是一直解析到字符串末尾，或者解析到遇见一个无效的浮点数字字符。也就是说，字符串的第一个小数点是有效的，而第二个小数点就是无效的，因此它后面的字符串将被忽略。例如“22.34.5”将会转换为22.34。<br/>
+除了第一个小数点有效之外，parseFloat与parseInt的第二个区别在与它始终都会忽略前导的零。<br/>
+parseFloat()只解析十进制值，因此它没有用第二个参数指定基数的用法。
+```js
+var num1=parseFloat("1234blue");  //1234
+
+var num2=parseFloat("0xA");                  //0
+
+var num3=parseFloat("0908.5");      //908.5
+
+var num4=parseFloat("3.125e7");             //31250000
+```
+::: tip
+ECMAScript定义了isNaN()函数。这个函数接受一个参数，该参数可以是任何类型，而函数会帮我们确定这个参数是否“不是数值”。isNaN()在接收到一个值之后，会尝试将这个值转换为数值。不能转换为数值的参数会返回true。
+:::

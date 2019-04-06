@@ -125,14 +125,30 @@ export default function request(api, options = {}) {
 ```
 
 ## pug
+### vue cli2
 安装命令
-`npm install pug pug-loader pug-filters -D`
+`npm install pug pug-loader pug-filters -D`<br/>
 在`webpack.base.conf`文件，在`module`的`rule`对象添加以下代码:
 ```js
   {
     test: /\.pug$/,
     loader: 'pug'
   }
+```
+### vue cli3
+`npm i -D pug pug-html-loader pug-plain-loader`<br/>
+和cli2比多了一个pug-plain-loader<br/>
+在`vue.config.js`添加代码：
+```js
+module.exports = {
+    chainWebpack: config => {
+        config.module.rule('pug')
+            .test(/\.pug$/)
+            .use('pug-html-loader')
+            .loader('pug-html-loader')
+            .end()
+    }
+}
 ```
 ## .eslintrc
 ```js
