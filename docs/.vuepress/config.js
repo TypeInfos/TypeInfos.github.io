@@ -60,9 +60,9 @@ module.exports = {
       }
     ],
     // valine配置
-    // valineConfig: {
-    //   appId: 'WVINvnvFXAbxAjirQzbDruKP-gzGzoHsz', // your appId
-    //   appKey: 'gar8bppl0vEVOiawaJUXrRM2', // your appKey
-    // }
+    valineConfig: {
+      appId: 'WVINvnvFXAbxAjirQzbDruKP-gzGzoHsz', // your appId
+      appKey: 'gar8bppl0vEVOiawaJUXrRM2', // your appKey
+    }
   }
 }

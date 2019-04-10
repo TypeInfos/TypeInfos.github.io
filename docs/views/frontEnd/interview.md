@@ -4,6 +4,7 @@ description: 'js面试的基础'
 sidebarDepth: 2
 sidebar: auto
 categories: frontEnd
+
 tags:
 - 面试
 - 前端
@@ -122,9 +123,11 @@ const [first, ...rest, last] = [1, 2, 3, 4, 5];
 [...'hello']
 // [ "h", "e", "l", "l", "o" ]
 ```
+## JS 事件模式
+### 发布订阅
 
+### 观察者
 ## Vue的data是怎么实现
-
 在Vue早期版本的时候是用
 ``` js
 Object.defineProperty(window, 'fetch', {
