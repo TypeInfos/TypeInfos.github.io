@@ -247,7 +247,34 @@ const throttle = (fn, context, delay, args) => {
 }
 
 ```
+## 数组去重
+```js
+Array.prototype.unique = function(){
+  let hash = new Map()
+  let result = []
+  let item
+  for (let i = 0; i < this.length; i++) {
+    if (Object.prototype.toString.call(this[i]) === '[object Object]'
+      || Object.prototype.toString.call(this[i]) === '[object Array]') {
+      item = JSON.stringify(this[i])
+    } else {
+      item = this[i]
+    }
+    if (!hash.has(item)) {
+      hash.set(item, true)
+      result.push(this[i])
+    }
+  }
+  return result
+}
+```
+``` js
+console.log([123,undefined, undefined, { a: 1 }, { a: { b: 1 } }, { a: "1" }, { a: { b: 1 } }, "meili"].unique())
 
+```
+结果对比
+`[123,undefined, undefined, { a: 1 }, { a: { b: 1 } }, { a: "1" }, { a: { b: 1 } }, "meili"]`<br/>
+`[ 123, undefined, { a: 1 }, { a: { b: 1 } }, { a: '1' }, 'meili' ]`
 ## 正则表达式
 ### 中文
 ::: tip 中文正则
