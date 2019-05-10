@@ -1,5 +1,5 @@
 ---
-title: '初级前端工程师面经'
+title: '前端工程师面经'
 description: 'js面试的基础'
 sidebarDepth: 2
 sidebar: auto
@@ -8,6 +8,7 @@ categories: frontEnd
 tags:
 - 面试
 - 前端
+- 前端基础
 ---
 
 ## js中for in与for of之间的差异
@@ -517,6 +518,61 @@ console.log(quickSort(arr,0,arr.length-1));
 - 如果有布尔类型，将true转换为1，false转换为0，然后用==规则继续比较
 - 如果一个值是对象，另一个是数字或字符串，将对象转换为原始值然后用==规则继续比较
 - 其他所有情况都认为不相等
+## async/await
+::: tip
+为什么要使用async/await，常用promise（当你没有彻底理解promise，请先看这篇文章）的人都知道每次都需要写`new Promise()`，代码整体看起来没那么优雅，但是两个作用都是一样的，都是处理异步操作。
+:::
+先看一段Promise的用法
+
+``` js
+function timeout(ms) {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			console.log('timeout',ms)
+			resolve('我是传递的信息')
+		}, ms);
+	});
+}
+
+function print (value, ms) {
+	return new Promise((resolve, reject) => {
+		timeout(ms).then(v => {
+			resolve(v)
+		})
+	});
+}
+
+print('hello', 2000).then(v => {
+	console.log('print', v)
+})
+```
+两秒后出现输出一下结果:
+```
+timeout 2000
+print 我是传递的信息
+```
+现在我们用async来代替上面print函数的代码
+
+``` js
+function timeout(ms) {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			console.log('timeout',ms)
+			resolve('我是传递的信息')
+		}, ms);
+	});
+}
+
+async function print (value, ms) {
+	let msg = await timeout(2000)
+	return msg
+}
+
+print('hello', 2000).then(v => {
+	console.log('print', v)
+})
+```
+输出的结果和执行的过程都是一样的，但是代码简便了很多
 ## null && undefined
 ::: tip
 在JavaScript规范中提到，要比较比较相等之前，不能将nullundefined转换成其他任何值，并且规定null和undefined是相等。null和undefined都代表无效的值。

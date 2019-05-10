@@ -14,7 +14,7 @@ tags:
 ---
 
 ::: tip 概述
-当遇到一些要死机的东西时会记在这边。
+当遇到一些要死记的东西时会记在这边。
 :::
 
 ## http
@@ -47,13 +47,7 @@ const codeMessage = {
 `private`:表明响应只能被单个用户缓存，不能作为共享缓存（即代理服务器不能缓存它），可以缓存响应内容。
 `no-cache`:在释放缓存副本之前，强制高速缓存请求提交给原始服务器进行验证
 ### 浏览器对于Cache-Control的响应
-<!-- https://blog.csdn.net/four_lemmo/article/details/78211520 -->
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| public      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
-
+[https://blog.csdn.net/four_lemmo/article/details/78211520](https://blog.csdn.net/four_lemmo/article/details/78211520)
 ## placeholder样式的更改
 ```css
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
@@ -147,10 +141,17 @@ RequireJS提供延迟加载功能
 ### .eslintrc
 `rules`
 ```js
-    // allow async-await
+  {
+    // 关闭 禁止使用console，生产环境不能使用console
+    'no-console': 'off',
+    // 关闭 使用debugger，生产环境不能使用
+    'no-debugger': 'off',
+    // 关闭 禁止对函数参数再赋值，在使用map时会使用参数更改
+    'no-param-reassign': 'off',
+    // 关闭 强制 generator 函数中 * 号周围有空格
     'generator-star-spacing': 'off',
     // 强制缩进2格
-    "indent": ["error", 2],
+    indent: ['error', 2],
     // 关闭 禁用不必要的转义字符
     'no-useless-escape': 'off',
     // 关闭 使用eval
@@ -158,17 +159,33 @@ RequireJS提供延迟加载功能
     // 关闭 禁用未声明的变量
     'no-undef': 'off',
     // 开启 禁止使用拖尾逗号
-    'comma-dangle': ["error", "never"],
+    'comma-dangle': ['error', 'never'],
     // 关闭函数名()的前面加空格
     'space-before-function-paren': 'off',
     // 关闭代码末尾空行
     'no-trailing-spaces': 'off',
     // 禁止块内填充(不加多的空行)
-    'padded-blocks': ["error", "never"],
+    'padded-blocks': ['error', 'never'],
     // 不允许空行
     'no-empty': 'error',
     // 禁用封号
-    'semi': ["error", "never"]
+    semi: ['error', 'never'],
+    // 允许全局属性的使用，比如isNaN()
+    'no-restricted-globals': ['error', 'event'],
+    // 允许函数根据代码分支有不同的return行为,可以return,也可以return false
+    'consistent-return': 'off',
+    // 关闭对function是否命名的禁用
+    'func-names': 'off',
+    // 关闭对continue的禁用
+    'no-continue': 'off',
+    // 关闭在数组里面必须return
+    'array-callback-return': 'off',
+    // 关闭禁止使用特定的语法
+    'no-restricted-syntax': 'off',
+    'vue/require-default-prop': 'warning',
+    'vue/no-v-html': 'warning',
+    'vue/no-use-v-if-with-v-for': 'off'
+  }
 ```
 
 ## C# => 取num个在min - max的不重复随机数
@@ -219,14 +236,22 @@ document.body.oncopy = function (e) {
 OSI七层模型对应过来TCP只有四层。
 :::
 | OSI七层模型       | 应用       | TCP/IP四层模型 |      应用      |
-| -------------| --------------- | ------------- |:-------------:| 
-| 应用层、表示层、会话层| 表示层：ASCII         | 应用层         | http协议、FTP协议 | 
+| -------------| --------------- | ------------- |:-------------:|
+| 应用层、表示层、会话层| 表示层：ASCII         | 应用层         | http协议、FTP协议 |
 | 传输层        | 防火墙         | 传输层         | tcp、udp      |
 | 网络层        | 三层交换机         | 网络层         | 路由器      |
 | 数据链路、物理层| 二层交换机和网卡、集线器         | 链路接口层      |      |
 ::: tip 二层交换机&三层交换机
 二层交换机只有交换功能，而三层交换机因为是在第三层，所以具有交换功能和路由器的功能。
 :::
+* 物理层:负责在物理线路上传输原始额二进制数据；
+* 数据链路层：负责在通信的实体间建立数据链路连接；
+* 网络层：负责创建逻辑链路，以及实现数据包的分片和和重组，实现拥塞控制、网络互动等功能；
+* 传输层：负责向用户提供端到端的通讯服务，实现流量控制以及差错控制；
+* 会话层：定义何时开始、控制和结束一个会话，包括对多个双向消息的控制和管理，以便只完成连续消息的一部分可以通知应用，从而使得表示层看到的数据是连续的，某些情况下，如果表示层收到了所有的数据，则用数据代表表示层；
+* 表示层：定义数据格式以及加密
+* 应用层：为应用程序提供了网络服务
+
 ### TCP/IP协议
 ::: tip 概念
 TCP/IP是一个协议簇，里面包括很多协议，例如：超文本协议(http)，文件传输协议(ftp)，TCP（Transmission Control Protocol 传输控制协议），UDP（User Datagram Protocol 用户数据报协议（无连接））
@@ -247,4 +272,70 @@ TCP/IP是一个协议簇，里面包括很多协议，例如：超文本协议(h
 ### https
 ::: tip https
 HTTPS即加密的HTTP，HTTPS并不是一个新协议，而是HTTP+SSL（TLS）。原本HTTP先和TCP（假定传输层是TCP协议）直接通信，而加了SSL后，就变成HTTP先和SSL通信，再由SSL和TCP通信，相当于SSL被嵌在了HTTP和TCP之间
-:::
+:::  
+### http1.0&&http1.1&&http2.0
+
+## DNS
+它作为将域名与IP地址相互映射的一个分布式数据库，能够使人更方便地访问互联网。DNS使用TCP和UDP端口53
+## get&&post
+get也可以带body参数，
+## 排序
+### 归并排序
+```js
+//归并排序
+function mergeSort(arr) {
+    const merge = (arr, l, mid, r) => {
+      let help = []
+      let i = 0
+      let p1 = l
+      let p2 = mid + 1
+      while (p1 <= mid && p2 <= r) {
+        help[i++] = (arr[p1] < arr[p2]) ? arr[p1++] : arr[p2++]
+      }
+      while (p1 <= mid) {
+        help[i++] = arr[p1++]
+      }
+      while (p2 <= r) {
+        help[i++] = arr[p2++]
+      }
+      console.log('help', help)
+      for (let i = 0; i < help.length; i++) {
+        arr[l + i] = help[i]
+      }
+      console.log('arr', arr)
+    }
+  const sortProcess = (arr, l, r) => {
+    if (l == r) {
+      return
+    }
+    let mid = Math.floor((l + r) / 2)
+    sortProcess(arr, l, mid)
+    sortProcess(arr, mid + 1, r)
+    merge(arr, l, mid, r)
+  }
+
+    if (arr.length < 2) {
+      return
+    }
+    sortProcess(arr, 0, arr.length - 1)
+}
+mergeSort(test)
+```
+打印
+```
+help [ 2, 4 ]
+arr [ 2, 4, 52, 3, 2, 56, 23, 1 ]
+help [ 3, 52 ]
+arr [ 2, 4, 3, 52, 2, 56, 23, 1 ]
+help [ 2, 3, 4, 52 ]
+arr [ 2, 3, 4, 52, 2, 56, 23, 1 ]
+help [ 2, 56 ]
+arr [ 2, 3, 4, 52, 2, 56, 23, 1 ]
+help [ 1, 23 ]
+arr [ 2, 3, 4, 52, 2, 56, 1, 23 ]
+help [ 1, 2, 23, 56 ]
+arr [ 2, 3, 4, 52, 1, 2, 23, 56 ]
+help [ 1, 2, 2, 3, 4, 23, 52, 56 ]
+arr [ 1, 2, 2, 3, 4, 23, 52, 56 ]
+```
+
