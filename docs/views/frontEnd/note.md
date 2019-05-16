@@ -338,4 +338,19 @@ arr [ 2, 3, 4, 52, 1, 2, 23, 56 ]
 help [ 1, 2, 2, 3, 4, 23, 52, 56 ]
 arr [ 1, 2, 2, 3, 4, 23, 52, 56 ]
 ```
-
+## 后端返回流下载
+::: tip 
+正常情况下window.open可以解决下载问题，但是有时候要在请求头里面加参数，比如一些权限验证，就可以用下面的代码
+:::
+```js
+const download = async (url, sessionId) => {
+  const fileResponse = await axios.get(url, { headers: { authorization:  'token...'} })
+  const blob = new Blob([fileResponse.data], { type: 'text/plain;charset=utf-8' })
+  url = window.URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = ['fileName']
+  a.click()
+  window.URL.revokeObjectURL(url)
+}
+```

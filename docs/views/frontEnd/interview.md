@@ -230,18 +230,17 @@ const antiShake = (fn, context, delay, args) => {
 const throttle = (fn, context, delay, args) => {
   // 判断是否是第一次执行，第一次执行给fn添加属性canRun:true
   if (!fn.hasOwnProperty('canRun')) {
-    Object.assign(fn, {
-      canRun: true
-    })
+    fn.canRun = true
   }
   if (!fn.canRun) {
     return
   }
+  // 第一次直接执行
+  fn.call(context, args)
   // 执通过关卡if(!canRun)，等于就拿到了通行证。然后下一步的操作就是立马将关卡关上canRun=false。
   // 这样，其他请求执行滚动事件的方法，就被挡回去了
   fn.canRun = false
   setTimeout(() => {
-    fn.call(context, args)
     // 执行完一次后delay秒后才能再执行一次
     fn.canRun = true
   }, delay)
